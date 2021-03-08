@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Dogs App</string>
+
+    <!-- Main page -->
+    <string name="bottom_navigation_tab_home">Home</string>
+    <string name="bottom_navigation_tab_search">Search</string>
+
 </resources>
