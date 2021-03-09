@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dogs App</string>
+    <string name="app_name">Dogs</string>
 
     <!-- Main page -->
     <string name="bottom_navigation_tab_home">Home</string>
