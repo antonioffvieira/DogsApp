@@ -1,6 +1,7 @@
 package com.antoniovieira.dogsapp.di
 
 import com.antoniovieira.dogsapp.BuildConfig
+import com.antoniovieira.dogsapp.data.remote.BreedsService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -51,5 +52,9 @@ class NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
+
+    @Provides
+    fun provideBreedsService(retrofit: Retrofit): BreedsService =
+        retrofit.create(BreedsService::class.java)
 
 }
