@@ -15,17 +15,28 @@ class NetworkModule {
 
     companion object {
         private const val BASE_URL = "https://api.thedogapi.com/v1/"
+        private const val HEADER_API_KEY = "x-api-key"
     }
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
         val clientBuilder = OkHttpClient.Builder()
 
         if (BuildConfig.DEBUG) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             clientBuilder.addInterceptor(httpLoggingInterceptor)
+        }
+
+        clientBuilder.addInterceptor { chain ->
+            val request = chain
+                .request()
+                .newBuilder()
+                .header(HEADER_API_KEY, BuildConfig.API_KEY)
+                .build()
+
+            chain.proceed(request)
         }
 
         return clientBuilder.build()
