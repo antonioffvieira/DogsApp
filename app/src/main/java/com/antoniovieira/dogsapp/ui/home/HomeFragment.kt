@@ -20,6 +20,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         fun newInstance() = HomeFragment()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (requireActivity().application as DogsApplication).applicationComponent.homeComponent()
+            .create().inject(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
