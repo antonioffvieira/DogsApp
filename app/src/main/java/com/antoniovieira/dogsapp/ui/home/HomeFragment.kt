@@ -9,11 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.antoniovieira.dogsapp.DogsApplication
-import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentHomeBinding
 import javax.inject.Inject
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
