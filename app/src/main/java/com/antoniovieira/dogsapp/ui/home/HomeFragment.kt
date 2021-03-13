@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.antoniovieira.dogsapp.DogsApplication
+import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentHomeBinding
 import com.antoniovieira.dogsapp.ui.home.adapter.ImagesListAdapter
+import com.antoniovieira.dogsapp.utils.OffsetItemDecoration
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -30,6 +32,10 @@ class HomeFragment : Fragment() {
         get() = _binding!!
 
     private val compositeDisposables = CompositeDisposable()
+
+    private val offsetItemDecoration by lazy {
+        OffsetItemDecoration(requireContext(), R.dimen.images_list_offset)
+    }
 
     private lateinit var imagesListAdapter: ImagesListAdapter
 
@@ -70,6 +76,7 @@ class HomeFragment : Fragment() {
         }
 
         with(binding.imagesList) {
+            addItemDecoration(offsetItemDecoration)
             adapter = imagesListAdapter
         }
     }
@@ -84,6 +91,7 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
+        binding.imagesList.removeItemDecoration(offsetItemDecoration)
         _binding = null
 
         compositeDisposables.clear()
