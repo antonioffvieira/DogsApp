@@ -1,6 +1,6 @@
 package com.antoniovieira.dogsapp.di
 
-import com.antoniovieira.dogsapp.ui.home.HomeComponent
+import com.antoniovieira.dogsapp.ui.home.di.HomeComponent
 import dagger.Module
 
 @Module(

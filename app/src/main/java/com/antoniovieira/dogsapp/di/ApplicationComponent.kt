@@ -1,7 +1,7 @@
 package com.antoniovieira.dogsapp.di
 
 import android.content.Context
-import com.antoniovieira.dogsapp.ui.home.HomeComponent
+import com.antoniovieira.dogsapp.ui.home.di.HomeComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
