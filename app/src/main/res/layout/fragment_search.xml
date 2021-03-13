@@ -22,6 +22,7 @@
         app:searchIcon="@drawable/ic_search_grey" />
 
     <ViewSwitcher
+        android:id="@+id/viewSwitcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
