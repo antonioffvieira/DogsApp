@@ -92,8 +92,8 @@ class HomeFragment : Fragment() {
 
         imagesListAdapter.addLoadStateListener { loadState ->
             when (loadState.source.refresh) {
-                is LoadState.NotLoading -> binding.viewFlipper.displayedChild = VIEW_SWITCHER_CONTENT_POSITION
-                is LoadState.Loading -> binding.viewFlipper.displayedChild = VIEW_SWITCHER_LOADING_POSITION
+                is LoadState.NotLoading -> binding.viewSwitcher.displayedChild = VIEW_SWITCHER_CONTENT_POSITION
+                is LoadState.Loading -> binding.viewSwitcher.displayedChild = VIEW_SWITCHER_LOADING_POSITION
                 is LoadState.Error -> handleError(loadState)
             }
         }
