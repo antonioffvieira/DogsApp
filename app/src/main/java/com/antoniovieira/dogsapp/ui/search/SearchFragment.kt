@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.antoniovieira.dogsapp.DogsApplication
 import com.antoniovieira.dogsapp.databinding.FragmentSearchBinding
+import javax.inject.Inject
 
 class SearchFragment : Fragment() {
 
@@ -15,6 +18,13 @@ class SearchFragment : Fragment() {
         const val TAG = "SearchFragment"
 
         fun newInstance() = SearchFragment()
+    }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val searchViewModel by viewModels<SearchViewModel> {
+        viewModelFactory
     }
 
     private var _binding: FragmentSearchBinding? = null
