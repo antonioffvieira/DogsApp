@@ -1,22 +1,18 @@
 package com.antoniovieira.dogsapp.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.data.model.Breed
+import com.antoniovieira.dogsapp.databinding.ListItemImageBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class ImagesListAdapter(
     private val onItemSelected: (Breed) -> Unit
-) : PagingDataAdapter<Breed, ImagesListAdapter.ImagesViewHolder>(COMPARATOR) {
+) : PagingDataAdapter<Breed, ImagesListAdapter.ImageViewHolder>(COMPARATOR) {
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Breed>() {
@@ -30,21 +26,18 @@ class ImagesListAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ImagesViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_image, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
+        val binding = ListItemImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ImageViewHolder(binding)
+    }
 
-    override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         getItem(position)?.let {
             holder.bind(it)
         }
     }
 
-    inner class ImagesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val breedImg: ImageView = itemView.findViewById(R.id.breedImage)
-        private val breedTxt: TextView = itemView.findViewById(R.id.breedName)
+    inner class ImageViewHolder(private val binding: ListItemImageBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(breed: Breed) {
             // FIXME
@@ -54,11 +47,11 @@ class ImagesListAdapter(
             Glide.with(itemView.context)
                 .load(breed.image.url)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(breedImg)
+                .into(binding.breedImage)
 
-            breedTxt.text = breed.name
+            binding.breedName.text = breed.name
 
-            itemView.setOnClickListener {
+            binding.root.setOnClickListener {
                 onItemSelected(breed)
             }
         }
