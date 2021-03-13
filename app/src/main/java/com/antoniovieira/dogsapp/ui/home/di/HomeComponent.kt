@@ -1,5 +1,6 @@
-package com.antoniovieira.dogsapp.ui.home
+package com.antoniovieira.dogsapp.ui.home.di
 
+import com.antoniovieira.dogsapp.ui.home.HomeFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [HomeModule::class])

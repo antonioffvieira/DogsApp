@@ -2,6 +2,7 @@ package com.antoniovieira.dogsapp.di
 
 import android.content.Context
 import com.antoniovieira.dogsapp.ui.home.di.HomeComponent
+import com.antoniovieira.dogsapp.ui.search.di.SearchComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -23,5 +24,7 @@ interface ApplicationComponent {
     }
 
     fun homeComponent(): HomeComponent.Factory
+
+    fun searchComponent(): SearchComponent.Factory
 
 }
