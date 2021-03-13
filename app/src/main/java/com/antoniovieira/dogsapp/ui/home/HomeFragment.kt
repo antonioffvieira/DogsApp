@@ -2,12 +2,15 @@ package com.antoniovieira.dogsapp.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.antoniovieira.dogsapp.DogsApplication
 import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentHomeBinding
@@ -18,6 +21,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
+
+    companion object {
+        const val TAG = "HomeFragment"
+
+        private const val VIEW_SWITCHER_LOADING_POSITION = 0
+        private const val VIEW_SWITCHER_CONTENT_POSITION = 1
+
+        fun newInstance() = HomeFragment()
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -38,12 +50,6 @@ class HomeFragment : Fragment() {
     }
 
     private lateinit var imagesListAdapter: ImagesListAdapter
-
-    companion object {
-        const val TAG = "HomeFragment"
-
-        fun newInstance() = HomeFragment()
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,13 +77,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupUI() {
-        imagesListAdapter = ImagesListAdapter {
-            // TODO Open detail page
-        }
+        initAdapter()
 
         with(binding.imagesList) {
             addItemDecoration(offsetItemDecoration)
             adapter = imagesListAdapter
+        }
+    }
+
+    private fun initAdapter() {
+        imagesListAdapter = ImagesListAdapter {
+            // TODO Open detail page
+        }
+
+        imagesListAdapter.addLoadStateListener { loadState ->
+            when (loadState.source.refresh) {
+                is LoadState.NotLoading -> binding.viewFlipper.displayedChild = VIEW_SWITCHER_CONTENT_POSITION
+                is LoadState.Loading -> binding.viewFlipper.displayedChild = VIEW_SWITCHER_LOADING_POSITION
+                is LoadState.Error -> handleError(loadState)
+            }
         }
     }
 
@@ -86,6 +104,12 @@ class HomeFragment : Fragment() {
         compositeDisposables.add(homeViewModel.getBreeds().subscribe {
             imagesListAdapter.submitData(lifecycle, it)
         })
+    }
+
+    private fun handleError(states: CombinedLoadStates) {
+        // TODO Handle type of error and show a popup
+        val refresh = states.source.refresh as? LoadState.Error
+        Log.d(TAG, "Pagination error: ${refresh?.error}")
     }
 
     override fun onDestroyView() {
