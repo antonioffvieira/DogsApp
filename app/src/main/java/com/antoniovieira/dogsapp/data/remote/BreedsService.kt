@@ -13,4 +13,9 @@ interface BreedsService {
         @Query("limit") limit: Int,
     ): Single<List<Breed>>
 
+    @GET("breeds/search")
+    fun searchBreedsByName(
+        @Query("q") query: String
+    ): Single<List<Breed>>
+
 }
