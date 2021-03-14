@@ -18,6 +18,9 @@
     <string name="breed_origin">Origin:</string>
     <string name="empty_value">-</string>
 
+    <!-- Breed detail -->
+    <string name="breed_detail_toolbar_title">Breed</string>
+
     <!-- Network errors -->
     <string name="network_error_title">No Internet Connection</string>
     <string name="network_error_description">It was not possible to show you this content because you are not connected to the Internet.</string>
