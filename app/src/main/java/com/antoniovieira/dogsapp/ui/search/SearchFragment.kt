@@ -104,6 +104,7 @@ class SearchFragment : Fragment() {
 
         searchViewModel.errorTitleAndMessage.observe(viewLifecycleOwner, {
             showPopup(it)
+            showContent()
         })
     }
 

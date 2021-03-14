@@ -3,6 +3,7 @@ package com.antoniovieira.dogsapp.ui.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.data.BreedsRepository
 import com.antoniovieira.dogsapp.data.model.Breed
 import com.antoniovieira.dogsapp.utils.ExceptionHelper
@@ -30,10 +31,19 @@ class SearchViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onSuccess = { _breeds.value = it },
+                onSuccess = { handleSuccessResponse(it) },
                 onError = { _errorTitleAndMessage.value = ExceptionHelper.getExceptionMessage(it) },
             )
             .addTo(compositeDisposables)
+    }
+
+    private fun handleSuccessResponse(breeds: List<Breed>) {
+        if (breeds.isEmpty()) {
+            _errorTitleAndMessage.value =
+                Pair(R.string.no_data_error_title, R.string.no_data_error_description)
+        } else {
+            _breeds.value = breeds
+        }
     }
 
     override fun onCleared() {
