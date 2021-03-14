@@ -14,6 +14,7 @@ import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentSearchBinding
 import com.antoniovieira.dogsapp.ui.search.adapter.BreedsListAdapter
 import com.antoniovieira.dogsapp.utils.OffsetItemDecoration
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
 
 class SearchFragment : Fragment() {
@@ -99,6 +100,10 @@ class SearchFragment : Fragment() {
             showContent()
             breedsListAdapter.breeds = it
         })
+
+        searchViewModel.errorTitleAndMessage.observe(viewLifecycleOwner, {
+            showPopup(it)
+        })
     }
 
     private fun initAdapter() {
@@ -118,6 +123,13 @@ class SearchFragment : Fragment() {
 
     private fun showLoading() {
         binding.viewSwitcher.displayedChild = VIEW_SWITCHER_LOADING_POSITION
+    }
+
+    private fun showPopup(errorTitleAndMessage: Pair<Int, Int>) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(errorTitleAndMessage.first)
+            .setMessage(errorTitleAndMessage.second)
+            .show()
     }
 
     override fun onDestroyView() {

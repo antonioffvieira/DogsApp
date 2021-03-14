@@ -2,7 +2,6 @@ package com.antoniovieira.dogsapp.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -20,7 +19,9 @@ import com.antoniovieira.dogsapp.DogsApplication
 import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentHomeBinding
 import com.antoniovieira.dogsapp.ui.home.adapter.ImagesListAdapter
+import com.antoniovieira.dogsapp.utils.ExceptionHelper
 import com.antoniovieira.dogsapp.utils.OffsetItemDecoration
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -143,9 +144,15 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun handleError(states: CombinedLoadStates) {
-        // TODO Handle type of error and show a popup
         val refresh = states.source.refresh as? LoadState.Error
-        Log.d(TAG, "Pagination error: ${refresh?.error}")
+        val throwable = refresh?.error ?: return
+
+        val errorTitleAndMessage: Pair<Int, Int> = ExceptionHelper.getExceptionMessage(throwable)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(errorTitleAndMessage.first)
+            .setMessage(errorTitleAndMessage.second)
+            .show()
     }
 
     private fun setCurrentLayoutManager() {
