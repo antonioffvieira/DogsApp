@@ -13,7 +13,7 @@
         android:name=".DogsApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DogsApp"
+        android:theme="@style/Theme.DogsApp.NoActionBar"
         tools:ignore="AllowBackup">
 
         <activity android:name=".ui.MainActivity">

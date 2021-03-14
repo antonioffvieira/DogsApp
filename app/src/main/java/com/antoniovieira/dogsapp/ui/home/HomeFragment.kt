@@ -4,8 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +22,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         const val TAG = "HomeFragment"
@@ -74,6 +76,24 @@ class HomeFragment : Fragment() {
 
         setupUI()
         requestData()
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_order_alphabetically -> {
+                item.isChecked = !item.isChecked
+
+                // TODO Sort alphabetically the list items
+            }
+
+            R.id.action_show_content_as_grid -> {
+                item.isChecked = !item.isChecked
+
+                // TODO Switch the current images list layout manager to a grid
+            }
+        }
+
+        return true
     }
 
     private fun setupUI() {

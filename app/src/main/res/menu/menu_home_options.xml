@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_order_alphabetically"
+        android:checkable="true"
+        android:title="@string/menu_option_order_alphabetically"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_show_content_as_grid"
+        android:checkable="true"
+        android:title="@string/menu_option_show_content_as_grid"
+        app:showAsAction="never" />
+
+</menu>
