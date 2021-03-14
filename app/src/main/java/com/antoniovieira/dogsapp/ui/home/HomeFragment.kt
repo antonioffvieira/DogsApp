@@ -13,6 +13,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.antoniovieira.dogsapp.DogsApplication
 import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentHomeBinding
@@ -30,7 +33,14 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         private const val VIEW_SWITCHER_LOADING_POSITION = 0
         private const val VIEW_SWITCHER_CONTENT_POSITION = 1
 
+        private const val NUMBER_OF_COLUMNS = 2
+
         fun newInstance() = HomeFragment()
+    }
+
+    enum class LayoutManagerType {
+        LINEAR_LAYOUT_MANAGER,
+        GRID_LAYOUT_MANAGER
     }
 
     @Inject
@@ -52,6 +62,8 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private lateinit var imagesListAdapter: ImagesListAdapter
+
+    private var currentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -89,7 +101,7 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_show_content_as_grid -> {
                 item.isChecked = !item.isChecked
 
-                // TODO Switch the current images list layout manager to a grid
+                setCurrentLayoutManager()
             }
         }
 
@@ -101,8 +113,12 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
         with(binding.imagesList) {
             addItemDecoration(offsetItemDecoration)
+            layoutManager = LinearLayoutManager(context)
             adapter = imagesListAdapter
         }
+
+        binding.toolbar.inflateMenu(R.menu.menu_home_options)
+        binding.toolbar.setOnMenuItemClickListener(this)
     }
 
     private fun initAdapter() {
@@ -130,6 +146,33 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         // TODO Handle type of error and show a popup
         val refresh = states.source.refresh as? LoadState.Error
         Log.d(TAG, "Pagination error: ${refresh?.error}")
+    }
+
+    private fun setCurrentLayoutManager() {
+        var layoutManager: RecyclerView.LayoutManager? = binding.imagesList.layoutManager
+        var scrollPosition = 0
+
+        if (binding.imagesList.layoutManager != null) {
+            scrollPosition =
+                (binding.imagesList.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        }
+
+        when (currentLayoutManagerType) {
+            LayoutManagerType.LINEAR_LAYOUT_MANAGER -> {
+                layoutManager = GridLayoutManager(context, NUMBER_OF_COLUMNS)
+                currentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER
+            }
+
+            LayoutManagerType.GRID_LAYOUT_MANAGER -> {
+                layoutManager = LinearLayoutManager(context)
+                currentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER
+            }
+        }
+
+        binding.imagesList.post {
+            binding.imagesList.layoutManager = layoutManager
+            binding.imagesList.scrollToPosition(scrollPosition)
+        }
     }
 
     override fun onDestroyView() {
