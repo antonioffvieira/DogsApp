@@ -19,7 +19,10 @@
     <string name="empty_value">-</string>
 
     <!-- Breed detail -->
-    <string name="breed_detail_toolbar_title">Breed</string>
+    <string name="breed_detail_title">Name</string>
+    <string name="breed_detail_category">Category</string>
+    <string name="breed_detail_origin">Origin</string>
+    <string name="breed_detail_temperament">Temperament</string>
 
     <!-- Network errors -->
     <string name="network_error_title">No Internet Connection</string>
