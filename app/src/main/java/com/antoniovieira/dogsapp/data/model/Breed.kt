@@ -11,6 +11,6 @@ data class Breed(
     val origin: String?,
     @SerializedName("breed_group")
     val group: String?,
-    val image: Image,
+    val image: Image?,
     val temperament: String
 ) : Parcelable

@@ -45,7 +45,7 @@ class ImagesListAdapter(
             //  transition would look much better
             //  - Some images are huge and don't look good
             Glide.with(itemView.context)
-                .load(breed.image.url)
+                .load(breed.image?.url)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.breedImage)
 
