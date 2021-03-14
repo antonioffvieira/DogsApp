@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antoniovieira.dogsapp.DogsApplication
 import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentHomeBinding
+import com.antoniovieira.dogsapp.ui.breeddetail.BreedDetailActivity
 import com.antoniovieira.dogsapp.ui.home.adapter.ImagesListAdapter
 import com.antoniovieira.dogsapp.utils.ExceptionHelper
 import com.antoniovieira.dogsapp.utils.OffsetItemDecoration
@@ -124,7 +125,7 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun initAdapter() {
         imagesListAdapter = ImagesListAdapter {
-            // TODO Open detail page
+            BreedDetailActivity.startActivity(requireContext(), it)
         }
 
         imagesListAdapter.addLoadStateListener { loadState ->

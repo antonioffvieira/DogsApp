@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.antoniovieira.dogsapp.DogsApplication
 import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentSearchBinding
+import com.antoniovieira.dogsapp.ui.breeddetail.BreedDetailActivity
 import com.antoniovieira.dogsapp.ui.search.adapter.BreedsListAdapter
 import com.antoniovieira.dogsapp.utils.OffsetItemDecoration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -108,7 +109,7 @@ class SearchFragment : Fragment() {
 
     private fun initAdapter() {
         breedsListAdapter = BreedsListAdapter {
-            // TODO Open detail page
+            BreedDetailActivity.startActivity(requireContext(), it)
         }
 
         with(binding.breedsList) {
