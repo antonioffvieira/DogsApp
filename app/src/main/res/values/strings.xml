@@ -18,4 +18,10 @@
     <string name="breed_origin">Origin:</string>
     <string name="empty_value">-</string>
 
+    <!-- Network errors -->
+    <string name="network_error_title">No Internet Connection</string>
+    <string name="network_error_description">It was not possible to show you this content because you are not connected to the Internet.</string>
+    <string name="generic_error_title">Oops!</string>
+    <string name="generic_error_description">Something went wrong.\nWait a moment and try again please.</string>
+
 </resources>
