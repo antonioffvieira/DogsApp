@@ -1,6 +1,7 @@
 package com.antoniovieira.dogsapp.ui.home
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -130,10 +131,8 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
         imagesListAdapter.addLoadStateListener { loadState ->
             when (loadState.source.refresh) {
-                is LoadState.NotLoading -> binding.viewSwitcher.displayedChild =
-                    VIEW_SWITCHER_CONTENT_POSITION
-                is LoadState.Loading -> binding.viewSwitcher.displayedChild =
-                    VIEW_SWITCHER_LOADING_POSITION
+                is LoadState.NotLoading -> showContent()
+                is LoadState.Loading -> showLoading()
                 is LoadState.Error -> handleError(loadState)
             }
         }
@@ -146,6 +145,15 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         })
     }
 
+    private fun showLoading() {
+        binding.viewSwitcher.displayedChild = VIEW_SWITCHER_LOADING_POSITION
+    }
+
+    private fun showContent() {
+        binding.viewSwitcher.displayedChild = VIEW_SWITCHER_CONTENT_POSITION
+    }
+
+    @Suppress("EXPERIMENTAL_API_USAGE")
     private fun handleError(states: CombinedLoadStates) {
         val refresh = states.source.refresh as? LoadState.Error
         val throwable = refresh?.error ?: return
@@ -155,6 +163,9 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(errorTitleAndMessage.first)
             .setMessage(errorTitleAndMessage.second)
+            .setPositiveButton(R.string.btn_ok) { _, _ -> showContent() }
+            .setNegativeButton(R.string.btn_retry) { _,_ -> requestData() }
+            .setOnDismissListener { showContent() }
             .show()
     }
 

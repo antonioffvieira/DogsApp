@@ -29,4 +29,8 @@
     <string name="generic_error_title">Oops!</string>
     <string name="generic_error_description">Something went wrong.\nWait a moment and try again please.</string>
 
+    <!-- Popup strings -->
+    <string name="btn_ok">OK</string>
+    <string name="btn_retry">Retry</string>
+
 </resources>
