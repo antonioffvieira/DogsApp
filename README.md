@@ -3,6 +3,7 @@
 Small application that consumes the [Dog Api](https://thedogapi.com/). 
 
 ## TODO
+* Fix `origin` property is always null even though the value is defined exactly as the api response.  
 * Fix show loading when the retry button is pressed in the popup in the first time we make the breeds request and we don't have a network connection 
 * Sort alphabetically the list elements in the home tab. Currently that menu item option is disabled
 * Refactor pagination to use a `RxRemoteMediator` to handle network/db pagination
