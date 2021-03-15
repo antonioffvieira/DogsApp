@@ -23,9 +23,10 @@
 
     <!-- Breed detail -->
     <string name="breed_detail_title">Name</string>
-    <string name="breed_detail_category">Category</string>
+    <string name="breed_detail_group">Group</string>
     <string name="breed_detail_origin">Origin</string>
     <string name="breed_detail_temperament">Temperament</string>
+    <string name="breed_detail_undefined_value">Undefined</string>
 
     <!-- Network errors -->
     <string name="network_error_title">No Internet Connection</string>

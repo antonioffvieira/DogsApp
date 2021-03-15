@@ -48,9 +48,8 @@ class BreedDetailActivity : AppCompatActivity() {
         with(binding) {
             toolbar.title = breed.name
             breedNameValue.text = breed.name
-            // TODO Where do I get this value because the API doesn't have any category value in the request
-            breedCategoryValue.text = getString(R.string.empty_value)
-            breedOriginValue.text = breed.origin ?: getString(R.string.empty_value)
+            breedGroupValue.text = if (!breed.group.isNullOrEmpty()) breed.group else getString(R.string.breed_detail_undefined_value)
+            breedOriginValue.text = breed.origin ?: getString(R.string.breed_detail_undefined_value)
             breedTemperamentValue.text = breed.temperament
         }
     }
