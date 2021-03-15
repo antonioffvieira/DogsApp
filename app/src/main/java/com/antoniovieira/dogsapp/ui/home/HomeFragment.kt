@@ -21,6 +21,7 @@ import com.antoniovieira.dogsapp.R
 import com.antoniovieira.dogsapp.databinding.FragmentHomeBinding
 import com.antoniovieira.dogsapp.ui.breeddetail.BreedDetailActivity
 import com.antoniovieira.dogsapp.ui.home.adapter.ImagesListAdapter
+import com.antoniovieira.dogsapp.ui.home.adapter.ImagesListFooterAdapter
 import com.antoniovieira.dogsapp.utils.ExceptionHelper
 import com.antoniovieira.dogsapp.utils.OffsetItemDecoration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -64,7 +65,9 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         OffsetItemDecoration(requireContext(), R.dimen.images_list_offset)
     }
 
-    private lateinit var imagesListAdapter: ImagesListAdapter
+    private val imagesListAdapter = ImagesListAdapter {
+        BreedDetailActivity.startActivity(requireContext(), it)
+    }
 
     private var currentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER
 
@@ -117,7 +120,6 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         with(binding.imagesList) {
             addItemDecoration(offsetItemDecoration)
             layoutManager = LinearLayoutManager(context)
-            adapter = imagesListAdapter
         }
 
         binding.toolbar.inflateMenu(R.menu.menu_home_options)
@@ -125,9 +127,9 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun initAdapter() {
-        imagesListAdapter = ImagesListAdapter {
-            BreedDetailActivity.startActivity(requireContext(), it)
-        }
+        binding.imagesList.adapter = imagesListAdapter.withLoadStateFooter(
+            ImagesListFooterAdapter { imagesListAdapter.retry() }
+        )
 
         imagesListAdapter.addLoadStateListener { loadState ->
             when (loadState.source.refresh) {
@@ -164,7 +166,7 @@ class HomeFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             .setTitle(errorTitleAndMessage.first)
             .setMessage(errorTitleAndMessage.second)
             .setPositiveButton(R.string.btn_ok) { _, _ -> showContent() }
-            .setNegativeButton(R.string.btn_retry) { _,_ -> requestData() }
+            .setNegativeButton(R.string.btn_retry) { _, _ -> requestData() }
             .setOnDismissListener { showContent() }
             .show()
     }

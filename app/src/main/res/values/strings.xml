@@ -8,7 +8,10 @@
     <!-- Home Menu -->
     <string name="menu_option_order_alphabetically">Order alphabetically</string>
     <string name="menu_option_show_content_as_grid">Show list as grid</string>
-    
+
+    <!-- Home -->
+    <string name="home_images_list_item_retry_button_text">Retry</string>
+
     <!-- Search -->
     <string name="search_input_hint">Search by breed name</string>
 
