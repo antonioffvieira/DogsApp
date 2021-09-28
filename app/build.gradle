@@ -62,10 +62,6 @@ dependencies {
     // Okhttp
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
-    // Kotlin
-    //noinspection DifferentStdlibGradleVersion
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     // Pagination
     def pagingVersion = '3.0.0-beta02'
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
